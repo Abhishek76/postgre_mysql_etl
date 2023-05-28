@@ -32,7 +32,7 @@ async def read_data():
             
             my_table    = pd.read_sql('select * from devices', psql_engine)
             
-            my_table['time'] = df['time'].astype(int)
+            my_table['time'] = my_table['time'].astype(int)
             my_table['hour'] = pd.to_datetime(my_table['time'],unit='s').dt.round("H") # converting unix time stamp to hours for later group by
 
 
