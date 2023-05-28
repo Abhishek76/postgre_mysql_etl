@@ -105,3 +105,5 @@ loop.run_forever()
 #some changes are also done in the main file as there was no cnn.commit and in docker file for analytics added some more packages and also 
 # mounted the ports in docker compose so that one can check mannualy the data bases have provided the code along with read me
 
+#the wait time can be changed as per required the sceduling of etl
+
