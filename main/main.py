@@ -6,6 +6,7 @@ from faker import Faker
 from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError
 from sqlalchemy import Table, Column, Integer, String, MetaData
+import pandas as pd
 
 faker = Faker()
 while True:
@@ -36,8 +37,12 @@ async def store_data_point(device_id):
                 time=str(int(time()))
             )
             conn.execute(ins, data)
+            conn.commit()
             print(device_id, data['time'])
-            await asyncio.sleep(1.0)
+            my_table    = pd.read_sql('select * from devices', psql_engine)
+            #another_attempt= psql.read_sql("SELECT * FROM devices", psql_engine)
+            print("lll",my_table)
+            await asyncio.sleep(100.0) 
 
 
 loop = asyncio.get_event_loop()
