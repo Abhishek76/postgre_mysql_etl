@@ -1,6 +1,6 @@
 from os import environ
-from time import sleep
-from sqlalchemy import create_engine
+from time import time  , sleep, strftime , gmtime
+from sqlalchemy import create_engine , text as sql_text
 from sqlalchemy.exc import OperationalError
 import pandas as pd
 import asyncio
