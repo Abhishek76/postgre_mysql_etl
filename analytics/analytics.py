@@ -48,8 +48,8 @@ async def read_data():
                 else :
                     try :
                         return distance(lonlat(float(x[1]),float(x[0])), lonlat(float(y[1]),float(y[0]))).km
-                    except Exception as error:
-                        print('Caught this error: ' + repr(error)) #for nan values  -- Caught this error: TypeError("'float' object is not subscriptable")
+                    except OperationalError:
+                        sleep(0.1)
                         return None
                     
                     
