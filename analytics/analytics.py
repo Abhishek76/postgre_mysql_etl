@@ -8,12 +8,12 @@ from geopy.distance import distance , lonlat
 import json
 
 print('Waiting for the data generator...')
-sleep(20)
+sleep(0.1)
 print('ETL Starting...')
 
 while True:
     try:
-        sleep(30)
+        sleep(5)
         psql_engine = create_engine(environ["POSTGRESQL_CS"], pool_pre_ping=True, pool_size=10)
         
         mysql_engine = create_engine(environ["MYSQL_CS"], pool_pre_ping=True, pool_size=10)
@@ -29,7 +29,7 @@ async def read_data():
     
     while True:
         try:
-            sleep(3)
+            sleep(0.1)
             psql_engine = create_engine(environ["POSTGRESQL_CS"], pool_pre_ping=True, pool_size=10)
             
             my_table    = pd.read_sql('select * from devices', psql_engine)
@@ -41,10 +41,12 @@ async def read_data():
             my_table['location_tupple'] = my_table['location'].apply(lambda x: tuple(json.loads(x).values())) # converting a json lat long values to a python tupple
 
             my_table['location_lagged'] = (my_table.sort_values(by=['time'], ascending=True).groupby(['device_id'])['location_tupple'].shift(1)) # shifting a lagging lat long values creating a new col so that we cant compare the to find out distance
+            my_table['location_lagged'] = my_table['location_lagged'].fillna(0)
+            my_table['location_tupple'] = my_table['location_tupple'].fillna(0)
 
             #a python function to find out distance between 2 lat long point
             def fxy(x, y):
-                if x is None or y is None : return None
+                if x == 0 or y == 0 : return None
                 else :
                     try :
                         return distance(lonlat(float(x[1]),float(x[0])), lonlat(float(y[1]),float(y[0]))).km
@@ -81,7 +83,7 @@ async def read_data():
 
             
         except Exception as error:
-            print('Caught this opperational analytics in setting up connction error: ' + repr(error))
+            #print('Caught this opperational analytics in setting up connction error: ' + repr(error))
             sleep(0.1)
             await asyncio.sleep(1.0)
 
