@@ -94,38 +94,3 @@ print ('pp',pp)
 
 
 
-
-#df2.to_csv("./df3.csv")
-#print(pd.to_datetime(my_table['time'],unit='s').dt.round("H"))
-
-# utc = gmtime(int(str(int(time()))))
-# print(strftime("%Y-%m-%d %H", utc))
-
-
-
-
-# Write the solution here
-
-
-# while True:
-#     try:
-#         #sleep(30)
-#         psql_engine = create_engine("postgresql+psycopg2://postgres:password@psql_db:5432/main", pool_pre_ping=True, pool_size=10)
-#         print ('hhh')
-#         my_table    = pd.read_sql_query(con=psql_engine.connect(), sql=sql_text('select * from devices'))
-#         #my_table    = pd.read_sql('select * from devices', psql_engine)
-#         #another_attempt= psql.read_sql("SELECT * FROM devices", psql_engine)
-#         print("lll",my_table)
-
-# # OR
-#         #print(another_attempt)
-
-#         break
-#     except OperationalError:
-#         sleep(0.1)
-# print('Connection abcd to PostgresSQL successful.')
-
-
-
-
-# # Write the solution here
