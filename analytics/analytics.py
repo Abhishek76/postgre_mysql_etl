@@ -1,6 +1,7 @@
 from os import environ
 from time import time  , sleep, strftime , gmtime
 from sqlalchemy import create_engine , text as sql_text
+
 from sqlalchemy.exc import OperationalError
 import pandas as pd
 import asyncio
@@ -8,12 +9,12 @@ from geopy.distance import distance , lonlat
 import json
 
 print('Waiting for the data generator...')
-sleep(0.1)
+sleep(20)
 print('ETL Starting...')
 
 while True:
     try:
-        sleep(5)
+        sleep(20)
         psql_engine = create_engine(environ["POSTGRESQL_CS"], pool_pre_ping=True, pool_size=10)
         
         mysql_engine = create_engine(environ["MYSQL_CS"], pool_pre_ping=True, pool_size=10)
@@ -76,14 +77,15 @@ async def read_data():
             with mysql_engine.connect() as conn:
                 to_check = conn.execute(sql_text("SELECT * FROM aggregated_table")).fetchall()
 
-            print ('pp',to_check)
+            print ('Final Mysql raw Data',to_check)
+            print (pd.read_sql('select * from aggregated_table', mysql_engine))
 
             
 
 
             
         except Exception as error:
-            #print('Caught this opperational analytics in setting up connction error: ' + repr(error))
+            print('Caught this opperational analytics in setting up connction error: ' + repr(error))
             sleep(0.1)
             await asyncio.sleep(1.0)
 
