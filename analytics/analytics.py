@@ -4,6 +4,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError
 import pandas as pd
 import asyncio
+from geopy.distance import distance , lonlat
+import json
 
 print('Waiting for the data generator...')
 sleep(20)
